@@ -37,6 +37,10 @@ def start(event): # wait on the event button clicked
 def stop(event):
     global paused # access global variable
     paused = not paused # toggle the state
+    if start_button.set_active(True): # if true
+        start_button.set_active(False) # ensures start button cannot sort
+    elif start_button.set_active(False):
+        start_button.set_active(True) # else reverse it
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
 
 # Initial list
@@ -61,6 +65,11 @@ paused = False # not yet paused
 graph_button = fig.add_axes([0.7, 0.01, 0.1, 0.05]) 
 pause_button = Button(graph_button, 'Pause')
 pause_button.on_clicked(stop)
+
+# Reset Button
+#graph_button = fig.add_axes([0.6, 0.01, 0.1, 0.05]) 
+#reset_button = Button(graph_button, 'Reset')
+#reset_button.on_clicked(draw_initial_list)
 
 plot.show() # output
 
