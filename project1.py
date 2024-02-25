@@ -43,7 +43,7 @@ def merge_sort_time(L):
     end_time = time.time()
     runtimeSeconds = start_time - end_time
     runtimeMS = runtimeSeconds*1000000
-    return runtimeMS
+    print('Merge Sort', runtimeMS)
                     
 def merge_sort_visuals(L, graph): # pass in list/graph 
     if len(L) > 1:
@@ -81,6 +81,7 @@ def merge_sort_visuals(L, graph): # pass in list/graph
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
+    start_time = time.time() # measure time taken
     n = len(L) # find the length of l and store in n
     for i in range(n): # ensure number of passes does not exceed length 
         for j in range(0, n-i-1): # start at 1st element but end before the largest last element 
@@ -97,6 +98,10 @@ def bubble_sort(L, graph): # pass in list/graph
 
                     while paused: # check for pause condition
                         plot.pause(0.1) # in .1 seconds stop
+    end_time = time.time()
+    runtimeSeconds = start_time - end_time
+    runtimeMS = runtimeSeconds*1000000
+    print('Bubble Sort', runtimeMS)
 
 L = [27, 14, 56, 8, 39, 73, 22, 61, 5, 48] # Global list of numbers
 
@@ -104,7 +109,7 @@ L = [27, 14, 56, 8, 39, 73, 22, 61, 5, 48] # Global list of numbers
 def start(event): # wait on the event button clicked
     global L # access the values
     bubble_sort(L, graph) # call bubble sort
-    merge_sort_visuals(L, graph) # call merge sort
+    # merge_sort_visuals(L, graph) # call merge sort (Commented out for now will be creating selection menu instead)
 
 # Stop all sorting
 def stop(event):
@@ -145,6 +150,5 @@ pause_button.on_clicked(stop)
 #reset_button.on_clicked(draw_initial_list)
 
 plot.show() # output
-
 
 
