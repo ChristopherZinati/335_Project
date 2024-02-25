@@ -93,21 +93,58 @@ def bubble_sort(L, graph): # pass in list/graph
                     graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
                     graph.set_xticks(np.arange(len(L))) # set axis positions
                     graph.set_xticklabels(L) # then label axis using array elements
-                    plot.pause(1.0) # delay updating to visualize sorting
+                    plot.pause(0.5) # delay updating to visualize sorting
+
+                    while paused: # check for pause condition
+                        plot.pause(0.1) # in .1 seconds stop
+
+L = [27, 14, 56, 8, 39, 73, 22, 61, 5, 48] # Global list of numbers
 
 # Call to start to sorting
 def start(event): # wait on the event button clicked
-    L = [2, 4, 1, 8, 3, 6] # list input
+    global L # access the values
     bubble_sort(L, graph) # call bubble sort
     merge_sort_visuals(L, graph) # call merge sort
 
+# Stop all sorting
+def stop(event):
+    global paused # access global variable
+    paused = not paused # toggle the state
+    if paused:
+        start_button.set_active(False) # ensures start button cannot sort
+    elif not paused:
+        start_button.set_active(True) # else reverse it
+    pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
+
+# Initial list
+def draw_initial_list(L):
+    graph.clear()
+    graph.set_title('Please Select Sorting Method')
+    graph.bar(np.arange(len(L)), L, align='center')
+    graph.set_xticks(np.arange(len(L)))
+    graph.set_xticklabels(L)
+
 # Create a figure and axis for the plot
 fig, graph = plot.subplots()
+draw_initial_list(L)
 
 # Start Button
 graph_button = fig.add_axes([0.8, 0.01, 0.1, 0.05]) # button positions
 start_button = Button(graph_button, 'Start')
 start_button.on_clicked(start)
+
+# Pause Button
+paused = False # not yet paused
+graph_button = fig.add_axes([0.7, 0.01, 0.1, 0.05]) 
+pause_button = Button(graph_button, 'Pause')
+pause_button.on_clicked(stop)
+
+# Reset Button
+#graph_button = fig.add_axes([0.6, 0.01, 0.1, 0.05]) 
+#reset_button = Button(graph_button, 'Reset')
+#reset_button.on_clicked(draw_initial_list)
+
 plot.show() # output
+
 
 
