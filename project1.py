@@ -37,9 +37,9 @@ def start(event): # wait on the event button clicked
 def stop(event):
     global paused # access global variable
     paused = not paused # toggle the state
-    if start_button.set_active(True): # if true
+    if paused:
         start_button.set_active(False) # ensures start button cannot sort
-    elif start_button.set_active(False):
+    elif not paused:
         start_button.set_active(True) # else reverse it
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
 
