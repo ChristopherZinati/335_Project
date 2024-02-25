@@ -9,7 +9,7 @@ import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
 from matplotlib.widgets import Button, RadioButtons  # import selection menu
 
-# Merge Sortt Function                 
+# Merge Sort Function                 
 def merge_sort(L, graph): # pass in list/graph 
     if len(L) > 1:
         mid = len(L)//2 # find midpoint
@@ -25,7 +25,7 @@ def merge_sort(L, graph): # pass in list/graph
             else:
                 L[k] = ri[j]
                 j += 1
-                k += 1
+            k += 1
         while i < len(le): # if one half becomes exhausted before the other
             L[k] = le[i]
             i += 1
@@ -40,7 +40,7 @@ def merge_sort(L, graph): # pass in list/graph
         graph.bar(np.arange(len(L)), (L), align='center')
         graph.set_xticks(np.arange(len(L)))
         graph.set_xticklabels(L)
-        plot.pause(1.0)
+        plot.pause(0.5)
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
