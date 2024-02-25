@@ -3,55 +3,20 @@
 # Authors: Victor Vu, Christopher Zinati,
 # Group: Syntax Sages 
 
-import time # required library to count runtime of each algorithm
 import matplotlib.pyplot as plot # required library for plot
 import numpy as np # contains object to manipulate plot
+import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
+from matplotlib.widgets import Button, RadioButtons  # import selection menu
 
-# Merge Sort Function
-def merge_sort_time(L):
-    start_time = time.time()
-    # merge sort is nested within time function in order to not 
-    # reset the timer when recursively called
-    def merge_sort(L):
-            if len(L) > 1:
-                mid = len(L)//2 # find midpoint
-                le = L[:mid] # divide into left and right subarrays
-                ri = L[mid:] 
-                merge_sort[le] # recursively sort both halves
-                merge_sort[ri]
-
-                i = j = k = 0
-                while i < len(le) and j < len(ri):
-                    if le[i] < ri[j]:
-                        L[k] = le[i]
-                        i += 1
-                    else:
-                        L[k] = ri[j]
-                        j += 1
-                    k += 1
-                while i < len(le):
-                    L[k] = le[i]
-                    i += 1
-                    k += 1
-
-                while j < len(ri):
-                    j += 1
-                    k += 1
-            return L
-     
-    end_time = time.time()
-    runtimeSeconds = start_time - end_time
-    runtimeMS = runtimeSeconds*1000000
-    print('Merge Sort', runtimeMS)
-                    
-def merge_sort_visuals(L, graph): # pass in list/graph 
+# Merge Sortt Function                 
+def merge_sort(L, graph): # pass in list/graph 
     if len(L) > 1:
         mid = len(L)//2 # find midpoint
         le = L[:mid] # divide into left and right subarrays
         ri = L[mid:] 
-        merge_sort_visuals(le, graph) # recursively sort both halves
-        merge_sort_visuals(ri, graph)
+        merge_sort(le, graph) # recursively sort both halves
+        merge_sort(ri, graph)
         i = j = k = 0
         while i < len(le) and j < len(ri):
             if le[i] < ri[j]:
@@ -60,7 +25,7 @@ def merge_sort_visuals(L, graph): # pass in list/graph
             else:
                 L[k] = ri[j]
                 j += 1
-            k += 1
+                k += 1
         while i < len(le): # if one half becomes exhausted before the other
             L[k] = le[i]
             i += 1
@@ -69,15 +34,13 @@ def merge_sort_visuals(L, graph): # pass in list/graph
             L[k] = ri[j]
             j += 1
             k += 1
-  
-    # gui portion (explanation in bubble_sort) 
-    graph.clear()
-    graph.set_title('Merge Sort')
-    graph.bar(np.arange(len(L)), (L), align='center')
-    graph.set_xticks(np.arange(len(L)))
-    graph.set_xticklabels(L)
-    plot.pause(1.0)
-    return L, graph   
+        # gui portion (explanation in bubble_sort) 
+        graph.clear()
+        graph.set_title('Merge Sort')
+        graph.bar(np.arange(len(L)), (L), align='center')
+        graph.set_xticks(np.arange(len(L)))
+        graph.set_xticklabels(L)
+        plot.pause(1.0)
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
@@ -99,17 +62,25 @@ def bubble_sort(L, graph): # pass in list/graph
                     while paused: # check for pause condition
                         plot.pause(0.1) # in .1 seconds stop
     end_time = time.time()
-    runtimeSeconds = start_time - end_time
+    runtimeSeconds = end_time - start_time
     runtimeMS = runtimeSeconds*1000000
     print('Bubble Sort', runtimeMS)
 
-L = [27, 14, 56, 8, 39, 73, 22, 61, 5, 48] # Global list of numbers
+L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
+sorting_method = 'Bubble Sort' # default sorting method
+
+# Handle selection of sorting method
+def choose_sorting_method(label):
+    global sorting_method
+    sorting_method = label
 
 # Call to start to sorting
 def start(event): # wait on the event button clicked
-    global L # access the values
-    bubble_sort(L, graph) # call bubble sort
-    # merge_sort_visuals(L, graph) # call merge sort (Commented out for now will be creating selection menu instead)
+    global L, sorting_method
+    if sorting_method == 'Bubble Sort':
+        bubble_sort(L, graph)
+    elif sorting_method == 'Merge Sort':
+        merge_sort(L, graph)
 
 # Stop all sorting
 def stop(event):
@@ -124,7 +95,7 @@ def stop(event):
 # Initial list
 def draw_initial_list(L):
     graph.clear()
-    graph.set_title('Please Select Sorting Method')
+    graph.set_title('Select a Sorting Method')
     graph.bar(np.arange(len(L)), L, align='center')
     graph.set_xticks(np.arange(len(L)))
     graph.set_xticklabels(L)
@@ -132,6 +103,11 @@ def draw_initial_list(L):
 # Create a figure and axis for the plot
 fig, graph = plot.subplots()
 draw_initial_list(L)
+
+# Selection button sorting method
+sorting_buttons_ax = fig.add_axes([0.125, 0.88, 0.2, 0.1]) # (Left/Right, Up/Down, Width, Height)
+sorting_buttons = RadioButtons(sorting_buttons_ax, ('Bubble Sort', 'Merge Sort'))
+sorting_buttons.on_clicked(choose_sorting_method)
 
 # Start Button
 graph_button = fig.add_axes([0.8, 0.01, 0.1, 0.05]) # button positions
