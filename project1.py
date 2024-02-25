@@ -21,12 +21,12 @@ def bubble_sort(L, graph): # pass in list/graph
                     graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
                     graph.set_xticks(np.arange(len(L))) # set axis positions
                     graph.set_xticklabels(L) # then label axis using array elements
-                    plot.pause(1.0) # delay updating to visualize sorting
+                    plot.pause(0.5) # delay updating to visualize sorting
 
                     while paused: # check for pause condition
                         plot.pause(0.1) # in .1 seconds stop
 
-L = [2, 4, 1, 8, 3, 6, 10, 15] # Global list of numbers
+L = [27, 14, 56, 8, 39, 73, 22, 61, 5, 48] # Global list of numbers
 
 # Call to start to sorting
 def start(event): # wait on the event button clicked
