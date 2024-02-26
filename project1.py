@@ -39,8 +39,12 @@ def merge_sort(L, graph): # pass in list/graph
 
             while paused: # check for pause condition
                     plot.pause(0.1) # in .1 seconds stop
-            graph.clear()                               
-            graph.bar(range(len(L)), L, align='center') # this part needs to be looked at closer,
+            # Gui portion: explained in bubble sort
+            graph.clear()    
+            graph.set_title('Merge Sort')                           
+            graph.bar(np.arange(len(L)), L, align='center') # this part needs to be looked at closer,
+            graph.set_xticks(np.arange(len(L))) 
+            graph.set_xticklabels(L) 
             plot.pause(0.5)                             # not sure how it isn't rendering properly - Chris
     merge_sorter(L, graph) # call is after definition
 
@@ -102,9 +106,13 @@ def stop(event):
 def clear(event):
     global L, L2, paused, sorting_method
     start_button.set_active(True) # reactivate start
+    graph.set_title('Select a Sorting Method')
+    graph.bar(np.arange(len(L2)), L2, align='center')
+    graph.set_xticks(np.arange(len(L2)))
+    graph.set_xticklabels(L2)
     if paused == False: # ensure the program is not moving
          paused = not paused
-    draw_initial_list(L2)
+         pause_button.label.set_text('Resume' if paused else 'Pause')
     if sorting_method == 'Bubble Sort':
         bubble_sort(L, graph)  # Re-sort the initial list if bubble sort was selected
     elif sorting_method == 'Merge Sort':
