@@ -9,6 +9,15 @@ import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
 from matplotlib.widgets import Button, RadioButtons # import selection menu
 
+# Quick Sort Function
+#def quick_sort(L, graph): # comparison to pivot point by spliting list
+#        graph.clear()    
+#        graph.set_title('Quick Sort')                           
+#        graph.bar(np.arange(len(L)), L, align='center') 
+#        graph.set_xticks(np.arange(len(L))) 
+#        graph.set_xticklabels(L) 
+#        plot.pause(0.5)      
+
 # Merge Sort Function                 
 def merge_sort(L, graph): # pass in list/graph 
     start_time = time.time() # start timer
@@ -55,7 +64,7 @@ def merge_sort(L, graph): # pass in list/graph
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
-    start_time = time.time() # measure time taken
+    start_time = time.time() 
     n = len(L) # find the length of l and store in n
     for i in range(n): # ensure number of passes does not exceed length 
         for j in range(0, n-i-1): # start at 1st element but end before the largest last element 
@@ -95,6 +104,8 @@ def start(event): # wait on the event button clicked
         bubble_sort(L, graph)
     elif sorting_method == 'Merge Sort':
         merge_sort(L, graph)
+    elif sorting_method == 'Quick Sort':
+        quick_sort(L, graph)
 
 # Stop all sorting
 def stop(event):
@@ -115,7 +126,9 @@ def clear(event):
     if sorting_method == 'Bubble Sort':
         bubble_sort(L2, graph)  # re-sort the initial list
     elif sorting_method == 'Merge Sort':
-        merge_sort(L2, graph)  # re-sort the initial list
+        merge_sort(L2, graph)  
+    elif sorting_method == 'Quick Sort':
+        quick_sort(L2, graph)  
 
 # Initial list
 def draw_initial_list(L):
@@ -130,8 +143,8 @@ fig, graph = plot.subplots()
 draw_initial_list(L)
 
 # Selection button sorting method
-sorting_buttons_ax = fig.add_axes([0.125, 0.88, 0.2, 0.1]) # (Left/Right, Up/Down, Width, Height)
-sorting_buttons = RadioButtons(sorting_buttons_ax, ('Bubble Sort', 'Merge Sort'))
+sorting_buttons_ax = fig.add_axes([0.125, 0.88, 0.2, 0.121]) # (Left/Right, Up/Down, Width, Height)
+sorting_buttons = RadioButtons(sorting_buttons_ax, ('Bubble Sort', 'Merge Sort', 'Quick Sort'))
 sorting_buttons.on_clicked(choose_sorting_method)
 
 # Start Button
