@@ -106,17 +106,16 @@ def stop(event):
 def clear(event):
     global L, L2, paused, sorting_method
     start_button.set_active(True) # reactivate start
-    graph.set_title('Select a Sorting Method')
     graph.bar(np.arange(len(L2)), L2, align='center')
     graph.set_xticks(np.arange(len(L2)))
     graph.set_xticklabels(L2)
-    if paused == False: # ensure the program is not moving
+    if paused == True: # ensure program is not paused
          paused = not paused
          pause_button.label.set_text('Resume' if paused else 'Pause')
     if sorting_method == 'Bubble Sort':
-        bubble_sort(L, graph)  # Re-sort the initial list if bubble sort was selected
+        bubble_sort(L2, graph)  # re-sort the initial list
     elif sorting_method == 'Merge Sort':
-        merge_sort(L, graph)  # Re-sort the initial list if merge sort was selected
+        merge_sort(L2, graph)  # re-sort the initial list
 
 # Initial list
 def draw_initial_list(L):
