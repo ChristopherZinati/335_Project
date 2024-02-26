@@ -11,36 +11,40 @@ from matplotlib.widgets import Button, RadioButtons  # import selection menu
 
 # Merge Sort Function                 
 def merge_sort(L, graph): # pass in list/graph 
-    if len(L) > 1:
-        mid = len(L)//2 # find midpoint
-        le = L[:mid] # divide into left and right subarrays
-        ri = L[mid:] 
-        merge_sort(le, graph) # recursively sort both halves
-        merge_sort(ri, graph)
-        i = j = k = 0
-        while i < len(le) and j < len(ri):
-            if le[i] < ri[j]:
+    start_time = time.time()
+    def merge_sorter (L, graph):# nested otherwise runtime gets printed/returned every iteration
+        if len(L) > 1:
+            mid = len(L)//2 # find midpoint
+            le = L[:mid] # divide into left and right subarrays
+            ri = L[mid:] 
+            merge_sorter(le, graph) # recursively sort both halves
+            merge_sorter(ri, graph)
+            i = j = k = 0
+            while i < len(le) and j < len(ri):
+                if le[i] < ri[j]:
+                    L[k] = le[i]
+                    i += 1
+                else:
+                    L[k] = ri[j]
+                    j += 1
+                k += 1
+            while i < len(le): # if one half becomes exhausted before the other
                 L[k] = le[i]
                 i += 1
-            else:
+                k += 1
+            while j < len(ri):
                 L[k] = ri[j]
                 j += 1
-            k += 1
-        while i < len(le): # if one half becomes exhausted before the other
-            L[k] = le[i]
-            i += 1
-            k += 1
-        while j < len(ri):
-            L[k] = ri[j]
-            j += 1
-            k += 1
-        # gui portion (explanation in bubble_sort) 
-        graph.clear()
-        graph.set_title('Merge Sort')
-        graph.bar(np.arange(len(L)), (L), align='center')
-        graph.set_xticks(np.arange(len(L)))
-        graph.set_xticklabels(L)
-        plot.pause(0.5)
+                k += 1
+            graph.clear()                               
+            graph.bar(range(len(L)), L, align='center') # this part needs to be looked at closer,
+            plot.pause(0.5)                             # not sure how it isn't rendering properly - Chris
+    merge_sorter(L, graph) # call is after definition
+
+    end_time = time.time()
+    runtimeSeconds = end_time - start_time
+    runtimeMS = runtimeSeconds*1000000
+    print('Merge Sort', runtimeMS)
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
