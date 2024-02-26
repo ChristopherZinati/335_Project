@@ -45,7 +45,7 @@ def merge_sort(L, graph): # pass in list/graph
     merge_sorter(L, graph) # call is after definition
 
     end_time = time.time() 
-    runtimeSeconds = end_time - start_time # find tota runtime
+    runtimeSeconds = end_time - start_time # find total runtime
     runtimeMS = runtimeSeconds*1000000
     print('Merge Sort', runtimeMS)
 
@@ -75,6 +75,7 @@ def bubble_sort(L, graph): # pass in list/graph
 
 L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
 sorting_method = 'Bubble Sort' # default sorting method
+L2 = L # store a copy of the initial list
 
 # Handle selection of sorting method
 def choose_sorting_method(label):
@@ -96,6 +97,18 @@ def stop(event):
     global paused # access global variable
     paused = not paused # toggle the state
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
+
+# Reset plot
+def clear(event):
+    global L, L2, paused, sorting_method
+    start_button.set_active(True) # reactivate start
+    if paused == False: # ensure the program is not moving
+         paused = not paused
+    draw_initial_list(L2)
+    if sorting_method == 'Bubble Sort':
+        bubble_sort(L, graph)  # Re-sort the initial list if bubble sort was selected
+    elif sorting_method == 'Merge Sort':
+        merge_sort(L, graph)  # Re-sort the initial list if merge sort was selected
 
 # Initial list
 def draw_initial_list(L):
@@ -126,9 +139,8 @@ pause_button = Button(graph_button, 'Pause')
 pause_button.on_clicked(stop)
 
 # Reset Button
-#graph_button = fig.add_axes([0.6, 0.01, 0.1, 0.05]) 
-#reset_button = Button(graph_button, 'Reset')
-#reset_button.on_clicked(draw_initial_list)
+graph_button = fig.add_axes([0.6, 0.01, 0.1, 0.05]) 
+reset_button = Button(graph_button, 'Reset')
+reset_button.on_clicked(clear)
 
 plot.show() # output
-
