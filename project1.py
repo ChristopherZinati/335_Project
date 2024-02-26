@@ -84,6 +84,8 @@ def choose_sorting_method(label):
 # Call to start to sorting
 def start(event): # wait on the event button clicked
     global L, sorting_method
+    start_button.set_active(False) # prevents starting twice
+    start_button.ax.figure.canvas.draw() # update button
     if sorting_method == 'Bubble Sort':
         bubble_sort(L, graph)
     elif sorting_method == 'Merge Sort':
@@ -93,10 +95,6 @@ def start(event): # wait on the event button clicked
 def stop(event):
     global paused # access global variable
     paused = not paused # toggle the state
-    if paused:
-        start_button.set_active(False) # ensures start button cannot sort
-    elif not paused:
-        start_button.set_active(True) # else reverse it
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
 
 # Initial list
@@ -118,7 +116,7 @@ sorting_buttons.on_clicked(choose_sorting_method)
 
 # Start Button
 graph_button = fig.add_axes([0.8, 0.01, 0.1, 0.05]) # button positions
-start_button = Button(graph_button, 'Start')
+start_button = Button(graph_button, 'Start', color='#90EE90')
 start_button.on_clicked(start)
 
 # Pause Button
@@ -133,5 +131,4 @@ pause_button.on_clicked(stop)
 #reset_button.on_clicked(draw_initial_list)
 
 plot.show() # output
-
 
