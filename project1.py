@@ -8,6 +8,7 @@ import numpy as np # contains object to manipulate plot
 import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
 from matplotlib.widgets import Button, RadioButtons # import selection menu
+from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
 def quick_sort(L, graph): # comparison to pivot point by spliting list
@@ -86,7 +87,8 @@ def bubble_sort(L, graph): # pass in list/graph
     runtimeMS = runtimeSeconds*1000000
     print('Bubble Sort', runtimeMS)
 
-L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
+# L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
+L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
 L2 = L # store a copy of the initial list
 
@@ -119,6 +121,7 @@ def clear(event):
     L = L2[:] # reset L to its original unsorted copy
     graph.clear() # clear the graph
     # replot the original graph
+    L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
     graph.set_title('Select a Sorting Method')
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
