@@ -10,8 +10,8 @@ from matplotlib.widgets import Button # imports buttons
 from matplotlib.widgets import Button, RadioButtons # import selection menu
 
 # Quick Sort Function
-#def quick_sort(L, graph): # comparison to pivot point by spliting list
-#        graph.clear()    
+def quick_sort(L, graph): # comparison to pivot point by spliting list
+    graph.clear()    
 #        graph.set_title('Quick Sort')                           
 #        graph.bar(np.arange(len(L)), L, align='center') 
 #        graph.set_xticks(np.arange(len(L))) 
@@ -113,22 +113,26 @@ def stop(event):
     paused = not paused # toggle the state
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
 
-# Reset plot
 def clear(event):
     global L, L2, paused, sorting_method
-    start_button.set_active(True) # reactivate start
-    graph.bar(np.arange(len(L2)), L2, align='center')
-    graph.set_xticks(np.arange(len(L2)))
-    graph.set_xticklabels(L2)
-    if paused == True: # ensure program is not paused
-         paused = not paused
-         pause_button.label.set_text('Resume' if paused else 'Pause')
+    start_button.set_active(True)  # reactivate start
+    L = L2[:] # reset L to its original unsorted copy
+    graph.clear() # clear the graph
+    # replot the original graph
+    graph.set_title('Select a Sorting Method')
+    graph.bar(np.arange(len(L)), L, align='center')  
+    graph.set_xticks(np.arange(len(L)))
+    graph.set_xticklabels(L)
+    if paused: # ensure program is not paused
+        paused = False
+        pause_button.label.set_text('Pause')
+    plot.draw()  # redraw the plot
     if sorting_method == 'Bubble Sort':
-        bubble_sort(L2, graph)  # re-sort the initial list
+        bubble_sort(L, graph)  # re-sort the initial list
     elif sorting_method == 'Merge Sort':
-        merge_sort(L2, graph)  
+        merge_sort(L, graph)
     elif sorting_method == 'Quick Sort':
-        quick_sort(L2, graph)  
+        quick_sort(L, graph)
 
 # Initial list
 def draw_initial_list(L):
