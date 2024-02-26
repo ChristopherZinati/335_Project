@@ -7,12 +7,12 @@ import matplotlib.pyplot as plot # required library for plot
 import numpy as np # contains object to manipulate plot
 import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
-from matplotlib.widgets import Button, RadioButtons  # import selection menu
+from matplotlib.widgets import Button, RadioButtons # import selection menu
 
 # Merge Sort Function                 
 def merge_sort(L, graph): # pass in list/graph 
-    start_time = time.time()
-    def merge_sorter (L, graph):# nested otherwise runtime gets printed/returned every iteration
+    start_time = time.time() # start timer
+    def merge_sorter (L, graph): # nested otherwise runtime gets printed/returned every iteration
         if len(L) > 1:
             mid = len(L)//2 # find midpoint
             le = L[:mid] # divide into left and right subarrays
@@ -20,15 +20,15 @@ def merge_sort(L, graph): # pass in list/graph
             merge_sorter(le, graph) # recursively sort both halves
             merge_sorter(ri, graph)
             i = j = k = 0
-            while i < len(le) and j < len(ri):
-                if le[i] < ri[j]:
-                    L[k] = le[i]
-                    i += 1
+            while i < len(le) and j < len(ri): # while elements remain
+                if le[i] < ri[j]: # if left subarray is shorter
+                    L[k] = le[i] # swap
+                    i += 1 # next element
                 else:
                     L[k] = ri[j]
                     j += 1
-                k += 1
-            while i < len(le): # if one half becomes exhausted before the other
+                k += 1 # advance the array
+            while i < len(le): # if one half becomes exhausted before the other, move cursor
                 L[k] = le[i]
                 i += 1
                 k += 1
@@ -36,13 +36,16 @@ def merge_sort(L, graph): # pass in list/graph
                 L[k] = ri[j]
                 j += 1
                 k += 1
+
+            while paused: # check for pause condition
+                    plot.pause(0.1) # in .1 seconds stop
             graph.clear()                               
             graph.bar(range(len(L)), L, align='center') # this part needs to be looked at closer,
             plot.pause(0.5)                             # not sure how it isn't rendering properly - Chris
     merge_sorter(L, graph) # call is after definition
 
-    end_time = time.time()
-    runtimeSeconds = end_time - start_time
+    end_time = time.time() 
+    runtimeSeconds = end_time - start_time # find tota runtime
     runtimeMS = runtimeSeconds*1000000
     print('Merge Sort', runtimeMS)
 
