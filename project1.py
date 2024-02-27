@@ -55,14 +55,14 @@ def merge(L, graph, le, mid, ri):
 
     # Clear and redraw the entire bar graph
     graph.clear() # reset for next execution
-    graph.set_title('Merge Sort')
+    graph.set_title('Merge Sort') # titled plot
     graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
     graph.set_xticks(np.arange(len(L))) # set axis positions
     graph.set_xticklabels(L) # then label axis using array elements
     plot.pause(0.5) # delay updating to visualize sorting
 
     while paused: # check for pause condition
-                        plot.pause(0.1) # in .1 seconds stop
+        plot.pause(0.1) # in .1 seconds stop
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
@@ -71,22 +71,24 @@ def bubble_sort(L, graph): # pass in list/graph
     for i in range(n): # ensure number of passes does not exceed length 
         for j in range(0, n-i-1): # start at 1st element but end before the largest last element 
                 if L[j] > L[j+1]: # if element is greater than the next element 
-                    L[j], L[j+1] = L[j+1], L[j] # swap positions 
+                    L[j], L[j+1] = L[j+1], L[j] # swap positions
+
+                    end_time = time.time()
+                    runtimeSeconds = end_time - start_time
+                    runtimeMS = runtimeSeconds*1000000 
 
                     # Gui Portion
-                    graph.clear() # reset for next execution
+                    graph.clear() 
                     graph.set_title('Bubble Sort')
-                    graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
-                    graph.set_xticks(np.arange(len(L))) # set axis positions
-                    graph.set_xticklabels(L) # then label axis using array elements
-                    plot.pause(0.5) # delay updating to visualize sorting
+                    graph.bar(np.arange(len(L)), L, align='center') 
+                    graph.set_xticks(np.arange(len(L))) 
+                    graph.set_xticklabels(L) 
+                    plot.pause(0.5) 
 
-                    while paused: # check for pause condition
-                        plot.pause(0.1) # in .1 seconds stop
-    end_time = time.time()
-    runtimeSeconds = end_time - start_time
-    runtimeMS = runtimeSeconds*1000000
-    print('Bubble Sort', runtimeMS)
+                    while paused: 
+                        plot.pause(0.1) 
+
+    print('Bubble Sort: ', runtimeMS, 'microseconds')
 
 # L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
 L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
@@ -116,6 +118,7 @@ def stop(event):
     paused = not paused # toggle the state
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
 
+# Clear the graph and generate random array
 def clear(event):
     global L, L2, paused, sorting_method
     start_button.set_active(True)  # reactivate start
