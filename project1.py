@@ -20,48 +20,49 @@ def quick_sort(L, graph): # comparison to pivot point by spliting list
 #        plot.pause(0.5)      
 
 # Merge Sort Function                 
-def merge_sort(L, graph): # pass in list/graph 
-    start_time = time.time() # start timer
-    def merge_sorter (L, graph): # nested otherwise runtime gets printed/returned every iteration
-        if len(L) > 1:
-            mid = len(L)//2 # find midpoint
-            le = L[:mid] # divide into left and right subarrays
-            ri = L[mid:] 
-            merge_sorter(le, graph) # recursively sort both halves
-            merge_sorter(ri, graph)
-            i = j = k = 0
-            while i < len(le) and j < len(ri): # while elements remain
-                if le[i] < ri[j]: # if left subarray is shorter
-                    L[k] = le[i] # swap
-                    i += 1 # next element
-                else:
-                    L[k] = ri[j]
-                    j += 1
-                k += 1 # advance the array
-            while i < len(le): # if one half becomes exhausted before the other, move cursor
-                L[k] = le[i]
-                i += 1
-                k += 1
-            while j < len(ri):
-                L[k] = ri[j]
-                j += 1
-                k += 1
+def merge_sort(L, graph, le, ri):
+    if le < ri:
+        mid = (le + ri) // 2
+        merge_sort(L, graph, le, mid)
+        merge_sort(L, graph, mid + 1, ri)
+        merge(L, graph, le, mid, ri)
 
-            while paused: # check for pause condition
-                    plot.pause(0.1) # in .1 seconds stop
-            # Gui portion: explained in bubble sort
-            graph.clear()    
-            graph.set_title('Merge Sort')                           
-            graph.bar(np.arange(len(L)), L, align='center') # this part needs to be looked at closer,
-            graph.set_xticks(np.arange(len(L))) 
-            graph.set_xticklabels(L) 
-            plot.pause(0.5)                             # not sure how it isn't rendering properly - Chris
-    merge_sorter(L, graph) # call is after definition
+def merge(L, graph, le, mid, ri):
+    left_arr = L[le:mid + 1].copy()
+    right_arr = L[mid + 1:ri + 1].copy()
 
-    end_time = time.time() 
-    runtimeSeconds = end_time - start_time # find total runtime
-    runtimeMS = runtimeSeconds*1000000
-    print('Merge Sort', runtimeMS)
+    i = j = 0
+    k = le
+
+    while i < len(left_arr) and j < len(right_arr):
+        if left_arr[i] <= right_arr[j]:
+            L[k] = left_arr[i]
+            i += 1
+        else:
+            L[k] = right_arr[j]
+            j += 1
+        k += 1
+
+    while i < len(left_arr):
+        L[k] = left_arr[i]
+        i += 1
+        k += 1
+
+    while j < len(right_arr):
+        L[k] = right_arr[j]
+        j += 1
+        k += 1
+
+    # Clear and redraw the entire bar graph
+    graph.clear() # reset for next execution
+    graph.set_title('Merge Sort')
+    graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
+    graph.set_xticks(np.arange(len(L))) # set axis positions
+    graph.set_xticklabels(L) # then label axis using array elements
+    plot.pause(0.5) # delay updating to visualize sorting
+
+    while paused: # check for pause condition
+                        plot.pause(0.1) # in .1 seconds stop
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
@@ -105,7 +106,7 @@ def start(event): # wait on the event button clicked
     if sorting_method == 'Bubble Sort':
         bubble_sort(L, graph)
     elif sorting_method == 'Merge Sort':
-        merge_sort(L, graph)
+        merge_sort(L, graph, 0, len(L) - 1)
     elif sorting_method == 'Quick Sort':
         quick_sort(L, graph)
 
@@ -133,7 +134,7 @@ def clear(event):
     if sorting_method == 'Bubble Sort':
         bubble_sort(L, graph)  # re-sort the initial list
     elif sorting_method == 'Merge Sort':
-        merge_sort(L, graph)
+        merge_sort(L, graph, 0, len(L) - 1)
     elif sorting_method == 'Quick Sort':
         quick_sort(L, graph)
 
