@@ -1,6 +1,6 @@
 # Program with visualization of sorting algorithms
 # Implements Bubble, Merge and Quick Sort in Python
-# Authors: Victor Vu, Christopher Zinati,
+# Authors: Victor Vu, Christopher Zinati, Noah Yarbrough
 # Group: Syntax Sages 
 
 import matplotlib.pyplot as plot # required library for plot
@@ -11,14 +11,42 @@ from matplotlib.widgets import Button, RadioButtons # import selection menu
 from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
-def quick_sort(L, graph): # comparison to pivot point by spliting list
-    graph.clear()    
-#        graph.set_title('Quick Sort')                           
-#        graph.bar(np.arange(len(L)), L, align='center') 
-#        graph.set_xticks(np.arange(len(L))) 
-#        graph.set_xticklabels(L) 
-#        plot.pause(0.5)      
+def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by spliting list
+    start_time = time.time
+    if end is None:
+        end = len(L) - 1
+    if start >= end:
+        return
 
+    pivot = L[end]
+    i = start
+
+    for j in range(start, end):
+        if L[j] < pivot:
+            L[i], L[j] = L[j], L[i]
+            i += 1
+
+            # Gui Portion
+            graph.clear() # reset for next execution
+            graph.set_title('Quick Sort')
+            graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
+            graph.set_xticks(np.arange(len(L))) # set axis positions
+            graph.set_xticklabels(L) # then label axis using array elements
+            plot.pause(0.5) # delay updating to visualize sorting
+
+    L[i], L[end] = L[end], L[i]
+
+    quick_sort(L, graph, start, i - 1)
+    quick_sort(L, graph, i + 1, end)
+
+def run_quick_sort(L, graph):
+    start_time = time.time()
+    quick_sort(L, graph)
+    end_time = time.time()
+    runtimeSeconds = end_time - start_time
+    runtimeMS = runtimeSeconds*1000000
+    print('Quick Sort', runtimeMS)
+    
 # Merge Sort Function                 
 def merge_sort(L, graph, le, ri):
     if le < ri:
@@ -88,6 +116,8 @@ def bubble_sort(L, graph): # pass in list/graph
     runtimeMS = runtimeSeconds*1000000
     print('Bubble Sort', runtimeMS)
 
+
+
 # L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
 L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
@@ -108,7 +138,7 @@ def start(event): # wait on the event button clicked
     elif sorting_method == 'Merge Sort':
         merge_sort(L, graph, 0, len(L) - 1)
     elif sorting_method == 'Quick Sort':
-        quick_sort(L, graph)
+        run_quick_sort(L, graph)
 
 # Stop all sorting
 def stop(event):
@@ -136,7 +166,7 @@ def clear(event):
     elif sorting_method == 'Merge Sort':
         merge_sort(L, graph, 0, len(L) - 1)
     elif sorting_method == 'Quick Sort':
-        quick_sort(L, graph)
+        run_quick_sort(L, graph)
 
 # Initial list
 def draw_initial_list(L):
