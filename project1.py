@@ -11,6 +11,7 @@ from matplotlib.widgets import Button, RadioButtons # import selection menu
 from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
+<<<<<<< HEAD
 def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by spliting list
     start_time = time.time
     if end is None:
@@ -46,51 +47,66 @@ def run_quick_sort(L, graph):
     runtimeSeconds = end_time - start_time
     runtimeMS = runtimeSeconds*1000000
     print('Quick Sort', runtimeMS)
-    
-# Merge Sort Function                 
-def merge_sort(L, graph, le, ri):
-    if le < ri:
-        mid = (le + ri) // 2
-        merge_sort(L, graph, le, mid)
-        merge_sort(L, graph, mid + 1, ri)
-        merge(L, graph, le, mid, ri)
+=======
 
-def merge(L, graph, le, mid, ri):
-    left_arr = L[le:mid + 1].copy()
-    right_arr = L[mid + 1:ri + 1].copy()
+# Merge Sort Function  
+def merger(L, graph, le, ri):
+    start_time = time.time() # start timer
+    def merge_sort(L, graph, le, ri): # nested merger, prevent resetting timer
+        if le < ri: # condition: left is less than right
+            mid = (le + ri) // 2 # split array
+            # Recursion function calls
+            merge_sort(L, graph, le, mid)
+            merge_sort(L, graph, mid + 1, ri)
 
-    i = j = 0
-    k = le
+            merge(L, graph, le, mid, ri) # helper function
 
-    while i < len(left_arr) and j < len(right_arr):
-        if left_arr[i] <= right_arr[j]:
-            L[k] = left_arr[i]
-            i += 1
-        else:
+    # Helper function for merge sort
+    def merge(L, graph, le, mid, ri):
+        # Store copies for array
+        left_arr = L[le:mid + 1].copy()
+        right_arr = L[mid + 1:ri + 1].copy()
+
+        i = j = 0 # start cursor at 0
+        k = le # main array
+
+        # If elements remain, contine the loop
+        while i < len(left_arr) and j < len(right_arr):
+            if left_arr[i] <= right_arr[j]: # if one side is less than/equal
+                L[k] = left_arr[i] # swap the out the larger number
+                i += 1 # advance to the next element
+            else:
+                L[k] = right_arr[j]
+                j += 1
+            k += 1 # advance the main array
+
+        # Handle case of odd numerbed array
+        while i < len(left_arr):
+            L[k] = left_arr[i] # add left over elements into array
+            i += 1 # move the pointer
+            k += 1 # main array must advance
+        while j < len(right_arr):
+>>>>>>> af3cfd60fdd5ddb5663e76a7c30a7c7ba8d6e49c
             L[k] = right_arr[j]
             j += 1
-        k += 1
+            k += 1
+ 
+        # Clear and redraw the entire bar graph
+        graph.clear() # reset for next execution
+        graph.set_title('Merge Sort') # titled plot
+        graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
+        graph.set_xticks(np.arange(len(L))) # set axis positions
+        graph.set_xticklabels(L) # then label axis using array elements
+        plot.pause(0.5) # delay updating to visualize sorting
 
-    while i < len(left_arr):
-        L[k] = left_arr[i]
-        i += 1
-        k += 1
+        while paused: # check for pause condition
+            plot.pause(0.1) # in .1 seconds stop
 
-    while j < len(right_arr):
-        L[k] = right_arr[j]
-        j += 1
-        k += 1
-
-    # Clear and redraw the entire bar graph
-    graph.clear() # reset for next execution
-    graph.set_title('Merge Sort')
-    graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
-    graph.set_xticks(np.arange(len(L))) # set axis positions
-    graph.set_xticklabels(L) # then label axis using array elements
-    plot.pause(0.5) # delay updating to visualize sorting
-
-    while paused: # check for pause condition
-                        plot.pause(0.1) # in .1 seconds stop
+    merge_sort(L, graph, le, ri) # call merger
+    end_time = time.time() # end timer
+    runtimeSeconds = end_time - start_time # compute total runtime
+    runtimeMS = runtimeSeconds*1000000 # convert to microseconds
+    print('Merge Sort:', runtimeMS, 'microseconds') # print
 
 # Bubble Sort Function
 def bubble_sort(L, graph): # pass in list/graph 
@@ -99,22 +115,25 @@ def bubble_sort(L, graph): # pass in list/graph
     for i in range(n): # ensure number of passes does not exceed length 
         for j in range(0, n-i-1): # start at 1st element but end before the largest last element 
                 if L[j] > L[j+1]: # if element is greater than the next element 
-                    L[j], L[j+1] = L[j+1], L[j] # swap positions 
+                    L[j], L[j+1] = L[j+1], L[j] # swap positions
+
+                    # Timer calculation
+                    end_time = time.time()
+                    runtimeSeconds = end_time - start_time
+                    runtimeMS = runtimeSeconds*1000000 
 
                     # Gui Portion
-                    graph.clear() # reset for next execution
+                    graph.clear() 
                     graph.set_title('Bubble Sort')
-                    graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
-                    graph.set_xticks(np.arange(len(L))) # set axis positions
-                    graph.set_xticklabels(L) # then label axis using array elements
-                    plot.pause(0.5) # delay updating to visualize sorting
+                    graph.bar(np.arange(len(L)), L, align='center') 
+                    graph.set_xticks(np.arange(len(L))) 
+                    graph.set_xticklabels(L) 
+                    plot.pause(0.5) 
 
-                    while paused: # check for pause condition
-                        plot.pause(0.1) # in .1 seconds stop
-    end_time = time.time()
-    runtimeSeconds = end_time - start_time
-    runtimeMS = runtimeSeconds*1000000
-    print('Bubble Sort', runtimeMS)
+                    while paused: # pause function
+                        plot.pause(0.1) 
+
+    print('Bubble Sort: ', runtimeMS, 'microseconds') # check runtime
 
 
 
@@ -122,6 +141,8 @@ def bubble_sort(L, graph): # pass in list/graph
 L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
 L2 = L # store a copy of the initial list
+paused = False # start not yet paused
+continue_sorting = False # if a program was sorting while button was pressed
 
 # Handle selection of sorting method
 def choose_sorting_method(label):
@@ -131,12 +152,13 @@ def choose_sorting_method(label):
 # Call to start to sorting
 def start(event): # wait on the event button clicked
     global L, sorting_method
+    start_button.color = None # indicates button is off
     start_button.set_active(False) # prevents starting twice
     start_button.ax.figure.canvas.draw() # update button
     if sorting_method == 'Bubble Sort':
         bubble_sort(L, graph)
     elif sorting_method == 'Merge Sort':
-        merge_sort(L, graph, 0, len(L) - 1)
+        merger(L, graph, 0, len(L) - 1)
     elif sorting_method == 'Quick Sort':
         run_quick_sort(L, graph)
 
@@ -146,9 +168,10 @@ def stop(event):
     paused = not paused # toggle the state
     pause_button.label.set_text('Resume' if paused else 'Pause') # switch text
 
+# Clear the graph and generate random array
 def clear(event):
-    global L, L2, paused, sorting_method
-    start_button.set_active(True)  # reactivate start
+    global L, L2, paused, sorting_method, continue_sorting
+    continue_sorting = False # stop sorting condition
     L = L2[:] # reset L to its original unsorted copy
     graph.clear() # clear the graph
     # replot the original graph
@@ -157,6 +180,7 @@ def clear(event):
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
     graph.set_xticklabels(L)
+<<<<<<< HEAD
     if paused: # ensure program is not paused
         paused = False
         pause_button.label.set_text('Pause')
@@ -167,6 +191,24 @@ def clear(event):
         merge_sort(L, graph, 0, len(L) - 1)
     elif sorting_method == 'Quick Sort':
         run_quick_sort(L, graph)
+=======
+
+    # Reactivate start button
+    start_button.set_active(True)
+    plot.draw() # redraw the plot
+    
+    plot.draw()  # Redraw the plot
+    if not paused: # ensure program is not paused
+        #pause_button.label.set_text('Pause')
+        start_button.set_active(True) # reactivate start
+        continue_sorting = True
+        if sorting_method == 'Bubble Sort':
+            bubble_sort(L, graph)  # re-sort the initial list
+        elif sorting_method == 'Merge Sort':
+            merger(L, graph, 0, len(L) - 1)
+        elif sorting_method == 'Quick Sort':
+            quick_sort(L, graph)
+>>>>>>> af3cfd60fdd5ddb5663e76a7c30a7c7ba8d6e49c
 
 # Initial list
 def draw_initial_list(L):
@@ -191,7 +233,6 @@ start_button = Button(graph_button, 'Start', color='#90EE90')
 start_button.on_clicked(start)
 
 # Pause Button
-paused = False # not yet paused
 graph_button = fig.add_axes([0.7, 0.01, 0.1, 0.05]) 
 pause_button = Button(graph_button, 'Pause')
 pause_button.on_clicked(stop)
