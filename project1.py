@@ -1,6 +1,6 @@
 # Program with visualization of sorting algorithms
 # Implements Bubble, Merge and Quick Sort in Python
-# Authors: Victor Vu, Christopher Zinati, Noah Yarbrough
+# Authors: Victor Vu, Christopher Zinati,
 # Group: Syntax Sages 
 
 import matplotlib.pyplot as plot # required library for plot
@@ -11,43 +11,67 @@ from matplotlib.widgets import Button, RadioButtons # import selection menu
 from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
-<<<<<<< HEAD
 def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by spliting list
-    start_time = time.time
+    # Check if the variable 'end' is None
     if end is None:
+     # If 'end' is None, set it to the last index of list 'L'
         end = len(L) - 1
+
+     # Check if the 'start' index is greater than or equal to the 'end' index
     if start >= end:
+    # If it is, return (exit the function)
         return
 
+    # Select the pivot element, which is the last element of the list
     pivot = L[end]
+
+    # Initialize 'i' to the starting index
     i = start
 
+    # Loop through the list from 'start' to 'end - 1'
     for j in range(start, end):
+        #   Check if the current element is less than the pivot
         if L[j] < pivot:
+            # Swap the current element with the element at index 'i'
             L[i], L[j] = L[j], L[i]
+            # Increment 'i'
             i += 1
 
-            # Gui Portion
-            graph.clear() # reset for next execution
+            # GUI Portion: Clear the graph and reset for next execution
+            graph.clear()
+            # Set the title of the graph to 'Quick Sort'
             graph.set_title('Quick Sort')
-            graph.bar(np.arange(len(L)), L, align='center') # set type to bar graph
-            graph.set_xticks(np.arange(len(L))) # set axis positions
-            graph.set_xticklabels(L) # then label axis using array elements
-            plot.pause(0.5) # delay updating to visualize sorting
+            # Create a bar graph with the current state of the list
+            graph.bar(np.arange(len(L)), L, align='center')
+            # Set the positions of the x-axis ticks
+            graph.set_xticks(np.arange(len(L)))
+            # Label the x-axis using the elements of the list
+            graph.set_xticklabels(L)
+            # Pause to visualize the sorting process
+            plot.pause(0.5)
 
+    # Swap the pivot element with the element at index 'i'
     L[i], L[end] = L[end], L[i]
 
+    # Recursively call quick_sort for the sublists before and after the pivot
     quick_sort(L, graph, start, i - 1)
     quick_sort(L, graph, i + 1, end)
 
+    # Function to run the quick_sort algorithm with timing
 def run_quick_sort(L, graph):
+    # Record the starting time
     start_time = time.time()
+    # Call quick_sort function
     quick_sort(L, graph)
+    # Record the ending time
     end_time = time.time()
+    # Calculate the runtime in seconds
     runtimeSeconds = end_time - start_time
-    runtimeMS = runtimeSeconds*1000000
+    # Convert runtime to microseconds
+    runtimeMS = runtimeSeconds * 1000000
+    # Print the runtime of the quick sort algorithm
     print('Quick Sort', runtimeMS)
-=======
+         
 
 # Merge Sort Function  
 def merger(L, graph, le, ri):
@@ -86,7 +110,6 @@ def merger(L, graph, le, ri):
             i += 1 # move the pointer
             k += 1 # main array must advance
         while j < len(right_arr):
->>>>>>> af3cfd60fdd5ddb5663e76a7c30a7c7ba8d6e49c
             L[k] = right_arr[j]
             j += 1
             k += 1
@@ -135,8 +158,6 @@ def bubble_sort(L, graph): # pass in list/graph
 
     print('Bubble Sort: ', runtimeMS, 'microseconds') # check runtime
 
-
-
 # L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
 L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
@@ -180,18 +201,6 @@ def clear(event):
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
     graph.set_xticklabels(L)
-<<<<<<< HEAD
-    if paused: # ensure program is not paused
-        paused = False
-        pause_button.label.set_text('Pause')
-    plot.draw()  # redraw the plot
-    if sorting_method == 'Bubble Sort':
-        bubble_sort(L, graph)  # re-sort the initial list
-    elif sorting_method == 'Merge Sort':
-        merge_sort(L, graph, 0, len(L) - 1)
-    elif sorting_method == 'Quick Sort':
-        run_quick_sort(L, graph)
-=======
 
     # Reactivate start button
     start_button.set_active(True)
@@ -207,8 +216,7 @@ def clear(event):
         elif sorting_method == 'Merge Sort':
             merger(L, graph, 0, len(L) - 1)
         elif sorting_method == 'Quick Sort':
-            quick_sort(L, graph)
->>>>>>> af3cfd60fdd5ddb5663e76a7c30a7c7ba8d6e49c
+            run_quick_sort(L, graph)
 
 # Initial list
 def draw_initial_list(L):
