@@ -12,7 +12,7 @@ from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
 def quick_sort(L, graph): # comparison to pivot point by spliting list
-    graph.clear()    
+    graph.clear() # reset for next execution   
 #        graph.set_title('Quick Sort')                           
 #        graph.bar(np.arange(len(L)), L, align='center') 
 #        graph.set_xticks(np.arange(len(L))) 
@@ -21,36 +21,40 @@ def quick_sort(L, graph): # comparison to pivot point by spliting list
 
 # Merge Sort Function  
 def merger(L, graph, le, ri):
-    start_time = time.time() # start timer, prevents recursion from resetting 
-    def merge_sort(L, graph, le, ri): # nested merger
-        if le < ri:
-            mid = (le + ri) // 2
+    start_time = time.time() # start timer
+    def merge_sort(L, graph, le, ri): # nested merger, prevent resetting timer
+        if le < ri: # condition: left is less than right
+            mid = (le + ri) // 2 # split array
+            # Recursion function calls
             merge_sort(L, graph, le, mid)
             merge_sort(L, graph, mid + 1, ri)
-            merge(L, graph, le, mid, ri) # call helper function
+
+            merge(L, graph, le, mid, ri) # helper function
 
     # Helper function for merge sort
     def merge(L, graph, le, mid, ri):
+        # Store copies for array
         left_arr = L[le:mid + 1].copy()
         right_arr = L[mid + 1:ri + 1].copy()
 
-        i = j = 0
-        k = le
+        i = j = 0 # start cursor at 0
+        k = le # main array
 
+        # If elements remain, contine the loop
         while i < len(left_arr) and j < len(right_arr):
-            if left_arr[i] <= right_arr[j]:
-                L[k] = left_arr[i]
-                i += 1
+            if left_arr[i] <= right_arr[j]: # if one side is less than/equal
+                L[k] = left_arr[i] # swap the out the larger number
+                i += 1 # advance to the next element
             else:
                 L[k] = right_arr[j]
                 j += 1
-            k += 1
+            k += 1 # advance the main array
 
+        # Handle case of odd numerbed array
         while i < len(left_arr):
-            L[k] = left_arr[i]
-            i += 1
-            k += 1
-
+            L[k] = left_arr[i] # add left over elements into array
+            i += 1 # move the pointer
+            k += 1 # main array must advance
         while j < len(right_arr):
             L[k] = right_arr[j]
             j += 1
