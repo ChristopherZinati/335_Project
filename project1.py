@@ -86,6 +86,7 @@ def bubble_sort(L, graph): # pass in list/graph
                 if L[j] > L[j+1]: # if element is greater than the next element 
                     L[j], L[j+1] = L[j+1], L[j] # swap positions
 
+                    # Timer calculation
                     end_time = time.time()
                     runtimeSeconds = end_time - start_time
                     runtimeMS = runtimeSeconds*1000000 
@@ -98,15 +99,17 @@ def bubble_sort(L, graph): # pass in list/graph
                     graph.set_xticklabels(L) 
                     plot.pause(0.5) 
 
-                    while paused: 
+                    while paused: # pause function
                         plot.pause(0.1) 
 
-    print('Bubble Sort: ', runtimeMS, 'microseconds')
+    print('Bubble Sort: ', runtimeMS, 'microseconds') # check runtime
 
 # L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
 L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
 L2 = L # store a copy of the initial list
+paused = False # start not yet paused
+continue_sorting = False # if a program was sorting while button was pressed
 
 # Handle selection of sorting method
 def choose_sorting_method(label):
@@ -116,6 +119,7 @@ def choose_sorting_method(label):
 # Call to start to sorting
 def start(event): # wait on the event button clicked
     global L, sorting_method
+    start_button.color = None # indicates button is off
     start_button.set_active(False) # prevents starting twice
     start_button.ax.figure.canvas.draw() # update button
     if sorting_method == 'Bubble Sort':
@@ -133,8 +137,8 @@ def stop(event):
 
 # Clear the graph and generate random array
 def clear(event):
-    global L, L2, paused, sorting_method
-    start_button.set_active(True)  # reactivate start
+    global L, L2, paused, sorting_method, continue_sorting
+    continue_sorting = False # stop sorting condition
     L = L2[:] # reset L to its original unsorted copy
     graph.clear() # clear the graph
     # replot the original graph
@@ -143,16 +147,22 @@ def clear(event):
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
     graph.set_xticklabels(L)
-    if paused: # ensure program is not paused
-        paused = False
-        pause_button.label.set_text('Pause')
-    plot.draw()  # redraw the plot
-    if sorting_method == 'Bubble Sort':
-        bubble_sort(L, graph)  # re-sort the initial list
-    elif sorting_method == 'Merge Sort':
-        merger(L, graph, 0, len(L) - 1)
-    elif sorting_method == 'Quick Sort':
-        quick_sort(L, graph)
+
+    # Reactivate start button
+    start_button.set_active(True)
+    plot.draw() # redraw the plot
+    
+    plot.draw()  # Redraw the plot
+    if not paused: # ensure program is not paused
+        #pause_button.label.set_text('Pause')
+        start_button.set_active(True) # reactivate start
+        continue_sorting = True
+        if sorting_method == 'Bubble Sort':
+            bubble_sort(L, graph)  # re-sort the initial list
+        elif sorting_method == 'Merge Sort':
+            merger(L, graph, 0, len(L) - 1)
+        elif sorting_method == 'Quick Sort':
+            quick_sort(L, graph)
 
 # Initial list
 def draw_initial_list(L):
@@ -177,7 +187,6 @@ start_button = Button(graph_button, 'Start', color='#90EE90')
 start_button.on_clicked(start)
 
 # Pause Button
-paused = False # not yet paused
 graph_button = fig.add_axes([0.7, 0.01, 0.1, 0.05]) 
 pause_button = Button(graph_button, 'Pause')
 pause_button.on_clicked(stop)
