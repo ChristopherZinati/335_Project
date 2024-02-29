@@ -1,6 +1,6 @@
 # Program with visualization of sorting algorithms
 # Implements Bubble, Merge and Quick Sort in Python
-# Authors: Victor Vu, Christopher Zinati, Noah
+# Authors: Victor Vu, Christopher Zinati,
 # Group: Syntax Sages 
 
 import matplotlib.pyplot as plot # required library for plot
@@ -31,6 +31,10 @@ def quick_sort(L, graph, start = 0, end = None):
             i += 1
             j -= 1
            
+    graph.clear()
+    graph.set_title('Quick Sort')
+    graph.bar(np.arange(len(L)), L, align='center')
+    graph.set_xticks(np.arange(len(L)))
     if L is not None:
         graph.set_xticklabels(L)
     plot.pause(0.5)
@@ -38,11 +42,6 @@ def quick_sort(L, graph, start = 0, end = None):
         plot.pause(0.1)
 
     L[i], L[end] = L[end], L[i]
-
-    graph.clear()
-    graph.set_title('Quick Sort')
-    graph.bar(np.arange(len(L)), L, align='center')
-    graph.set_xticks(np.arange(len(L)))
 
     quick_sort(L, graph, start, i - 1)
     quick_sort(L, graph, i + 1, end)
@@ -61,9 +60,8 @@ def run_quick_sort(L, graph):
     # Convert runtime to microseconds
     runtimeMS = runtimeSeconds * 1000000
     # Print the runtime of the quick sort algorithm
-    graph.clear()
     print('Quick Sort:', runtimeMS, 'microseconds')
-    print(L)
+         
 
 # Merge Sort Function  
 def merger(L, graph, le, ri):
@@ -150,8 +148,8 @@ def bubble_sort(L, graph): # pass in list/graph
 
     print('Bubble Sort: ', runtimeMS, 'microseconds') # check runtime
 
-#L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
-L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
+L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
+#L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
 L2 = L[:]
 L2 = L # store a copy of the initial list
@@ -189,7 +187,9 @@ def clear(event):
     print("L2 before clearing:", L2)
     L = L2[:] # reset L to its original unsorted copy
     graph.clear() # clear the graph
-    L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
+    L = [42, 12, 45, 23, 87, 32, 11, 24, 22, 50, 62, 71]
+    # replot the original graph
+    #L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
     graph.set_title('Select a Sorting Method')
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
