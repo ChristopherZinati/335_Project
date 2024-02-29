@@ -50,6 +50,9 @@ def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by 
             # Pause to visualize the sorting process
             plot.pause(0.5)
 
+            while paused: # pause function
+                plot.pause(0.1) 
+
     # Swap the pivot element with the element at index 'i'
     L[i], L[end] = L[end], L[i]
 
@@ -70,7 +73,7 @@ def run_quick_sort(L, graph):
     # Convert runtime to microseconds
     runtimeMS = runtimeSeconds * 1000000
     # Print the runtime of the quick sort algorithm
-    print('Quick Sort', runtimeMS)
+    print('Quick Sort:', runtimeMS, 'microseconds')
          
 
 # Merge Sort Function  
