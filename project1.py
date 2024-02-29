@@ -205,10 +205,6 @@ def clear(event):
     graph.set_xticks(np.arange(len(L)))
     graph.set_xticklabels(L)
 
-    # Reactivate start button
-    start_button.set_active(True)
-    plot.draw() # redraw the plot
-    
     plot.draw()  # Redraw the plot
     if not paused: # ensure program is not paused
         #pause_button.label.set_text('Pause')
