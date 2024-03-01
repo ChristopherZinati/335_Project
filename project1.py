@@ -8,7 +8,7 @@ import numpy as np # contains object to manipulate plot
 import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
 from matplotlib.widgets import RadioButtons # import selection menu
-from numpy import random # needed to use randomly generated lists
+from numpy import random # needed to use randomly generated array
 
 # Quick Sort Function
 def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by spliting list
@@ -27,7 +27,7 @@ def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by 
         while L[i] < pivot: # check if the current element is less than the pivot
             i += 1 # increment index
         while L[j] > pivot:
-            j -= 1 # deincrement j
+            j -= 1 # de-increment j
         if i <= j: # Swap the current element with the element at index 'i'
             L[i], L[j] = L[j], L[i]
             i += 1
@@ -50,6 +50,8 @@ def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by 
     # recursive calls quick_sort for the sublists before and after the pivot
     quick_sort(L, graph, start, i - 1)
     quick_sort(L, graph, i + 1, end)
+
+    plot.draw() # redraw to update plot
 
     # Function to run the quick_sort algorithm with timing
 def run_quick_sort(L, graph):
@@ -152,8 +154,7 @@ def bubble_sort(L, graph): # pass in list/graph
 
     print('Bubble Sort: ', runtimeMS, 'microseconds') # check runtime
 
-L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
-#L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
+L = [27, 14, 56, 8, 39, 73, 22, 61] # initial list of numbers
 sorting_method = 'Bubble Sort' # default sorting method
 paused = False # start not yet paused
 
@@ -183,8 +184,8 @@ def stop(event):
 def clear(event):
     global L, paused, sorting_method
     graph.clear() # clear the graph
-    L = [42, 12, 45, 23, 87, 32, 11, 24, 22, 50, 62, 71]
-    #L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
+    #L = [42, 12, 45, 23, 87, 32, 11, 24, 22, 50, 62, 71]
+    L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
     # Reset gui
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
