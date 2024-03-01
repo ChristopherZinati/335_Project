@@ -1,6 +1,6 @@
 # Program with visualization of sorting algorithms
 # Implements Bubble, Merge and Quick Sort in Python
-# Authors: Victor Vu, Christopher Zinati,
+# Authors: Victor Vu, Christopher Zinati, Noah Yarbrough
 # Group: Syntax Sages 
 
 import matplotlib.pyplot as plot # required library for plot
