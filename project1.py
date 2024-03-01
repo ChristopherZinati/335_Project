@@ -7,7 +7,7 @@ import matplotlib.pyplot as plot # required library for plot
 import numpy as np # contains object to manipulate plot
 import time # required library to count runtime of each algorithm
 from matplotlib.widgets import Button # imports buttons
-from matplotlib.widgets import Button, RadioButtons # import selection menu
+from matplotlib.widgets import RadioButtons # import selection menu
 from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
