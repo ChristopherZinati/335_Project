@@ -193,11 +193,8 @@ def clear(event):
     graph.set_xticklabels(L)
 
     # Reactivate start button
-    start_button.set_active(True)
     plot.draw() # redraw the plot
     if not paused: # ensure program is not paused
-        #pause_button.label.set_text('Pause')
-        start_button.set_active(True) # reactivate start
         if sorting_method == 'Bubble Sort':
             bubble_sort(L, graph)  # re-sort the initial list
         elif sorting_method == 'Merge Sort':
