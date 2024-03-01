@@ -158,7 +158,6 @@ sorting_method = 'Bubble Sort' # default sorting method
 L2 = L[:]
 L2 = L # store a copy of the initial list
 paused = False # start not yet paused
-continue_sorting = False # if a program was sorting while button was pressed
 
 # Handle selection of sorting method
 def choose_sorting_method(label):
@@ -186,8 +185,7 @@ def stop(event):
 
 # Clear the graph and generate random array
 def clear(event):
-    global L, L2, paused, sorting_method, continue_sorting
-    continue_sorting = False # stop sorting condition
+    global L, L2, paused, sorting_method
     print("L2 before clearing:", L2)
     L = L2[:] # reset L to its original unsorted copy
     graph.clear() # clear the graph
@@ -205,7 +203,6 @@ def clear(event):
     if not paused: # ensure program is not paused
         #pause_button.label.set_text('Pause')
         start_button.set_active(True) # reactivate start
-        continue_sorting = True
         if sorting_method == 'Bubble Sort':
             bubble_sort(L, graph)  # re-sort the initial list
         elif sorting_method == 'Merge Sort':
