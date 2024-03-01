@@ -165,9 +165,7 @@ def choose_sorting_method(label):
 # Call to start to sorting
 def start(event): # wait on the event button clicked
     global L, sorting_method
-    start_button.color = None # indicates button is off
     start_button.set_active(False) # prevents starting twice
-    start_button.ax.figure.canvas.draw() # update button
     if sorting_method == 'Bubble Sort':
         bubble_sort(L, graph)
     elif sorting_method == 'Merge Sort':
@@ -187,13 +185,11 @@ def clear(event):
     graph.clear() # clear the graph
     L = [42, 12, 45, 23, 87, 32, 11, 24, 22, 50, 62, 71]
     #L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
-    graph.set_title('Select a Sorting Method')
+    # Reset gui
     graph.bar(np.arange(len(L)), L, align='center')  
     graph.set_xticks(np.arange(len(L)))
     graph.set_xticklabels(L)
 
-    # Reactivate start button
-    plot.draw() # redraw the plot
     if not paused: # ensure program is not paused
         if sorting_method == 'Bubble Sort':
             bubble_sort(L, graph)  # re-sort the initial list
