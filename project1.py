@@ -11,38 +11,43 @@ from matplotlib.widgets import Button, RadioButtons # import selection menu
 from numpy import random # needed to use randomly generated lists
 
 # Quick Sort Function
-def quick_sort(L, graph, start = 0, end = None):
-    if end is None:
-        end = len(L) - 1
-    if start >= end:
+def quick_sort(L, graph, start = 0, end = None): # comparison to pivot point by spliting list
+    if end is None: # check if the variable 'end' is None
+        end = len(L) - 1 # set it to the last index of list 'L'
+    if start >= end: # if the 'start' index is greater than or equal to the 'end' index
         return
 
+    # Select the pivot element, which is the last element of the list
     pivot = L[end]
-    i = start
-    j = end - 1
+    i = start # 'i' to the starting index
+    j = end - 1 # j is ending index
 
+    # While i has not reached the last index
     while i <= j:
-        while L[i] < pivot:
-            i += 1
+        while L[i] < pivot: # check if the current element is less than the pivot
+            i += 1 # increment index
         while L[j] > pivot:
-            j -= 1
-        if i <= j:
+            j -= 1 # deincrement j
+        if i <= j: # Swap the current element with the element at index 'i'
             L[i], L[j] = L[j], L[i]
             i += 1
             j -= 1
-           
+    # Gui portion - see merge sort 
     graph.clear()
     graph.set_title('Quick Sort')
     graph.bar(np.arange(len(L)), L, align='center')
     graph.set_xticks(np.arange(len(L)))
     if L is not None:
-        graph.set_xticklabels(L)
-    plot.pause(0.5)
-    while paused:
+        graph.set_xticklabels(L) # update axis label
+
+    plot.pause(0.5) # in .5 seconds update
+    while paused: # check for pause condition
         plot.pause(0.1)
 
+     # Swap the pivot element with the element at index 'i'
     L[i], L[end] = L[end], L[i]
 
+    # recursive calls quick_sort for the sublists before and after the pivot
     quick_sort(L, graph, start, i - 1)
     quick_sort(L, graph, i + 1, end)
 
@@ -60,8 +65,7 @@ def run_quick_sort(L, graph):
     # Convert runtime to microseconds
     runtimeMS = runtimeSeconds * 1000000
     # Print the runtime of the quick sort algorithm
-    print('Quick Sort:', runtimeMS, 'microseconds')
-         
+    print('Quick Sort:', runtimeMS, 'microseconds')    
 
 # Merge Sort Function  
 def merger(L, graph, le, ri):
