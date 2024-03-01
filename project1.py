@@ -67,7 +67,13 @@ def run_quick_sort(L, graph):
     # Convert runtime to microseconds
     runtimeMS = runtimeSeconds * 1000000
     # Print the runtime of the quick sort algorithm
-    print('Quick Sort:', runtimeMS, 'microseconds')    
+    print('Quick Sort:', runtimeMS, 'microseconds')  
+    graph.clear() # redraw to update plot  
+    graph.set_title('Quick Sort')
+    graph.bar(np.arange(len(L)), L, align='center')
+    graph.set_xticks(np.arange(len(L)))
+    graph.set_xticklabels(L)
+    print(L)
 
 # Merge Sort Function  
 def merger(L, graph, le, ri):
