@@ -155,8 +155,6 @@ def bubble_sort(L, graph): # pass in list/graph
 L = [27, 14, 56, 8, 39, 73, 22, 61] # global list of numbers
 #L = [random.randint(1, 100) for _ in range(5, 15)] # randomly generated list
 sorting_method = 'Bubble Sort' # default sorting method
-L2 = L[:]
-L2 = L # store a copy of the initial list
 paused = False # start not yet paused
 
 # Handle selection of sorting method
@@ -185,12 +183,9 @@ def stop(event):
 
 # Clear the graph and generate random array
 def clear(event):
-    global L, L2, paused, sorting_method
-    print("L2 before clearing:", L2)
-    L = L2[:] # reset L to its original unsorted copy
+    global L, paused, sorting_method
     graph.clear() # clear the graph
     L = [42, 12, 45, 23, 87, 32, 11, 24, 22, 50, 62, 71]
-    # replot the original graph
     #L = [random.randint(1, 100) for _ in range(5, 15)] # generate a brand new list
     graph.set_title('Select a Sorting Method')
     graph.bar(np.arange(len(L)), L, align='center')  
