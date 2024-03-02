@@ -15,3 +15,5 @@ Run Python File: python3 gui_sort.py
 - matplotlib
 - numpy
 
+![Capture](https://github.com/vuvictor1/Gui-Algorithm-Sorter/assets/78053016/7af2cfd4-c742-4a3c-8a40-30ffa1a6b50a)
+
