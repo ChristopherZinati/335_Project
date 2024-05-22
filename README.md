@@ -17,3 +17,7 @@ Run Python File: python3 gui_sort.py
 
 ![Capture](https://github.com/vuvictor1/Gui-Algorithm-Sorter/assets/78053016/7af2cfd4-c742-4a3c-8a40-30ffa1a6b50a)
 
+**See the demo video here:**
+https://github.com/vuvictor1/GUI-Algorithms/assets/78053016/2bf3fdb3-1df1-40ed-9f09-4a679d1feb72
+
+
